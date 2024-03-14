@@ -1,0 +1,13 @@
+# Exercism ignores these
+/javascript/*/node_modules
+/javascript/*/bin/configlet
+/javascript/*/bin/configlet.exe
+/javascript/*/pnpm-lock.yaml
+/javascript/*/yarn.lock
+
+# I'm ignoring these
+/*/*/HELP.md
+/*/*/HINTS.md
+/*/*/LICENSE
+/*/*/.gitignore
+
