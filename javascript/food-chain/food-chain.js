@@ -62,6 +62,13 @@
 
 
   I'm annoyed that I'm still working on this...  ughhhhhh....
+
+
+  Ok, have a working solution now!  Looking through other solutions for ones I like:
+  - Octowl: https://exercism.org/tracks/javascript/exercises/food-chain/solutions/Octowl
+    this one has that "as close to a one liner as you can get" feel.  Uses 2 arrays with
+    matching ids instead of a matrix, which is simpler I think.  Uses Array.from which I forgot existed
+
  */
 
 
