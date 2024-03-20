@@ -57,6 +57,63 @@ const test = () => {
 
 // test();
 
+
+// ***** Slaymance's solution  ***** //
+
+// This one is the best I think.  Copied here to study/comment it.
+
+/**
+ * Check out all slaymance's solutions to the Exercism JavaScript track:
+ * github.com/slaymance/exercism/tree/main/javascript
+ */
+
+// I hadn't realized that a simple less/greater than comparison would work!
+const ROMAN_NUMERALS = [
+  [1000, 'M'],
+  [900, 'CM'],
+  [500, 'D'],
+  [400, 'CD'],
+  [100, 'C'],
+  [90, 'XC'],
+  [50, 'L'],
+  [40, 'XL'],
+  [10, 'X'],
+  [9, 'IX'],
+  [5, 'V'],
+  [4, 'IV'],
+  [1, 'I']
+];
+
+const slaymanceSolution = int => {
+  if (int === 0) return '';
+
+  // looping through the numerals not the digits
+  // destructuring the value/numeral
+  const [value, numeral] = ROMAN_NUMERALS.find(
+    // destructuring in param here - only need first element which has the int
+    ([value]) => value <= int
+  );
+
+ // recursing!  This did feel like a recursive problem
+ // to me at first but I couldn't quite find the way.
+ // `int - value` gives us the places at each recursive step:
+ // ex 3469 would call toRoman with
+  //                  | result MMMCDLXIX
+  // -> 3469 (-1000)  | return M + MMCDLXIX
+  // -> 2469 (-1000)  | return M + MCDLXIX
+  // -> 1469 (-1000)  | return M + CDLXIX
+  // -> 469 (-400)    | return CD + LXIX
+  // -> 69 (-50)      | return L + XIX
+  // -> 19 (-10)      | return X + IX
+  // -> 9 (-9)        | return IX
+  // -> 0             | return empty string
+  return numeral + toRoman(int - value);
+};
+
+/*** Module Export ***/
+
 export const toRoman = (number) => {
   return numeralsForNumber(number)
 };
+
+
