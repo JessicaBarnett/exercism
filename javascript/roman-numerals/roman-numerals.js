@@ -34,10 +34,6 @@ const numeralsForNumber = (number) => {
     .join(''); // 'MMMDCXLIX'
 }
 
-export const toRoman = (number) => {
-  return numeralsForNumber(number)
-};
-
 const test = () => {
   [1,10,100,1000].map((p, i) => console.log(`${p}s: ${numeralOptsForPlaceIdx(i)}`));
 
@@ -60,3 +56,7 @@ const test = () => {
 }
 
 // test();
+
+export const toRoman = (number) => {
+  return numeralsForNumber(number)
+};
