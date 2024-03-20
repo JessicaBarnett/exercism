@@ -59,4 +59,4 @@ const test = () => {
   console.log(`3649: ${numeralsForNumber(3649)}`)
 }
 
-test();
+// test();
