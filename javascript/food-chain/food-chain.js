@@ -62,15 +62,7 @@
 
 
   I'm annoyed that I'm still working on this...  ughhhhhh....
-
-
-  Ok, have a working solution now!  Looking through other solutions for ones I like:
-  - Octowl: https://exercism.org/tracks/javascript/exercises/food-chain/solutions/Octowl
-    this one has that "as close to a one liner as you can get" feel.  Uses 2 arrays with
-    matching ids instead of a matrix, which is simpler I think.  Uses Array.from which I forgot existed
-
- */
-
+*/
 
 const ANIMALS = [
   ['fly', 'I don\'t know why she swallowed the fly. Perhaps she\'ll die.'],
@@ -139,3 +131,126 @@ export class Song {
     return verses(startVerse, endVerse);
   }
 }
+
+
+/***** COMMUNITY SOLUTIONS  *****/
+
+/** Slaymance  **/
+
+/**
+ * Check out all my solutions to the Exercism JavaScript track:
+ * github.com/slaymance/exercism/tree/main/javascript
+ */
+
+// EXTREMELY HANDY HELPER FN remember this jess!!
+// `[...Array(10+1).keys()] is a VERY handy way to get an array of numbers!
+// ex max = 10 returns [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+// and .slice(min) gives us only the range we want
+// ex min = 5 removes 5 elements from the front and returns [ 5, 6, 7, 8, 9, 10 ]
+// result of min 5, max 10 is an array of numbers from 5-10, including of 5 and 10
+//
+const range = (min, max) => [...Array(max + 1).keys()].slice(min);
+
+const WRIGGLED = 'wriggled and jiggled and tickled inside her';
+const ANIMALS = [
+  ['fly', 'I don\'t know why she swallowed the fly. Perhaps she\'ll die.\n'],
+  ['spider', `It ${WRIGGLED}.\n`], // how does this handle the 'that wirggled...' variation?
+  ['bird', 'How absurd to swallow a bird!\n'],
+  ['cat', 'Imagine that, to swallow a cat!\n'],
+  ['dog', 'What a hog, to swallow a dog!\n'],
+  ['goat', 'Just opened her throat and swallowed a goat!\n'],
+  ['cow', 'I don\'t know how she swallowed a cow!\n'],
+  ['horse', 'She\'s dead, of course!\n']
+];
+
+const getAnimal = num => ANIMALS[num][0];
+const getAnimalLine = num => ANIMALS[num][1];
+const know = num => `I know an old lady who swallowed a ${getAnimal(num)}.\n`;
+const swallow = num => `She swallowed the ${getAnimal(num + 1)} to catch the ${getAnimal(num) +
+  (getAnimal(num) === 'spider' ? ` that ${WRIGGLED}` : '')}.\n`;
+
+/**
+ * I refactored the code and the tests to use functions instead of a class. Since we're not managing state within the
+ * class, functions are sufficient.
+ */
+const verse = num => {
+  const firstLines = know(num - 1) + getAnimalLine(num - 1);
+  if (['fly', 'horse'].includes(getAnimal(num - 1))) return firstLines;
+
+  return range(0, num - 2).reduceRight((verse, line) => verse + swallow(line), firstLines) + getAnimalLine(0);
+};
+
+const verses = (first, last) => range(first, last).reduce((song, verseNum) => `${song + verse(verseNum)}\n`, '');
+
+/**
+ * The below code is only used to make the tests pass.
+ */
+export class Song {
+  verse(...args) {
+    return verse(...args);
+  }
+
+  verses(...args) {
+    return verses(...args);
+  }
+}
+
+/******* Octowl's Solution *******/
+
+export class Song {
+  static animals = [
+    "fly",
+    "spider",
+    "bird",
+    "cat",
+    "dog",
+    "goat",
+    "cow",
+    "horse",
+  ];
+
+  // lol incredulity
+  static incredulity = [
+    "I don't know why she swallowed the fly. Perhaps she'll die.\n",
+    "It wriggled and jiggled and tickled inside her.\n",
+    "How absurd to swallow a bird!\n",
+    "Imagine that, to swallow a cat!\n",
+    "What a hog, to swallow a dog!\n",
+    "Just opened her throat and swallowed a goat!\n",
+    "I don't know how she swallowed a cow!\n",
+    "She's dead, of course!\n",
+  ];
+
+  reason(num, lines = "") {
+    return !num
+      ? lines
+      : lines +
+          `She swallowed the ${Song.animals[num]} to catch the ${
+            Song.animals[num - 1]
+          }${
+            num === 2 ? " that wriggled and jiggled and tickled inside her" : ""
+          }.\n` +
+          this.reason(num - 1, lines);
+  }
+
+  verse(num) {
+    num--;
+    const firstLine = `I know an old lady who swallowed a ${Song.animals[num]}.\n`;
+    const secondLine = Song.incredulity[num];
+    const deathLine = Song.incredulity[0];
+    const reason = this.reason(num);
+
+    return `${firstLine}${secondLine}${
+      num === 0 || num === 7 ? "" : reason + deathLine
+    }`;
+  }
+
+  verses(start, end) {
+    return Array.from(
+      { length: end - start + 1 },
+      (_, i) => this.verse(i + 1) + "\n"
+    ).join``;
+  }
+}
+
+

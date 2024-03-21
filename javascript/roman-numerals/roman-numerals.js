@@ -110,6 +110,9 @@ const slaymanceSolution = int => {
   return numeral + toRoman(int - value);
 };
 
+/** Video with a bunch of ways to do this conversion!  It's well-tread territory it seems  **/
+// https://youtu.be/6fGP5IVXTxs
+
 /*** Module Export ***/
 
 export const toRoman = (number) => {
