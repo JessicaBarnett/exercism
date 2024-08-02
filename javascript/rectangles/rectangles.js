@@ -23,6 +23,15 @@ const hasBottomEdgeAtRow = (asciiMatrix, col1, col2, row) => {
   return asciiMatrix[row][col1] === '+' && asciiMatrix[row][col2] == '+';
 }
 
+const hasCompleteSides = (asciiMatrix, col1, col2, topRow, bottomRow)  => {
+  const squareBits = [
+    ...topRow.slice(col1, col2-col1), 
+    ...bottomRow.slice(col1, col2-col1),
+    
+  // all elements from col1 to col2 in topRow and bottomRow are all `-`
+  // 
+}
+
 // Logic
 // for each + in graph
 //    for each sibling + to right in same row
